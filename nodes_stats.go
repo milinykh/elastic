@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/olivere/elastic/v7/uritemplates"
+	"github.com/milinykh/elastic/v7/uritemplates"
 )
 
 // NodesStatsService returns node statistics.

@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/olivere/elastic/v7/uritemplates"
+	"github.com/milinykh/elastic/v7/uritemplates"
 )
 
 // TasksCancelService can cancel long-running tasks.

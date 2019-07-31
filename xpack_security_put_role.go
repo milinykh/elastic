@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/olivere/elastic/v7/uritemplates"
+	"github.com/milinykh/elastic/v7/uritemplates"
 )
 
 // XPackSecurityPutRoleService retrieves a role by its name.

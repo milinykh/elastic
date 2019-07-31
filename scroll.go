@@ -13,7 +13,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/olivere/elastic/v7/uritemplates"
+	"github.com/milinykh/elastic/v7/uritemplates"
 )
 
 const (

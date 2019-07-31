@@ -20,7 +20,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/olivere/elastic/v7"
+	"github.com/milinykh/elastic/v7"
 )
 
 const (
