@@ -26,6 +26,8 @@ type BulkIndexRequest struct {
 	parent          string
 	version         *int64 // default is MATCH_ANY
 	versionType     string // default is "internal"
+	ifSeqNo         *int64
+	ifPrimaryTerm   *int64
 	doc             interface{}
 	pipeline        string
 	retryOnConflict *int
@@ -49,6 +51,8 @@ type bulkIndexRequestCommandOp struct {
 	Routing         string `json:"routing,omitempty"`
 	Version         *int64 `json:"version,omitempty"`
 	VersionType     string `json:"version_type,omitempty"`
+	IfSeqNo         *int64 `json:"if_seq_no,omitempty"`
+	IfPrimaryTerm   *int64 `json:"if_primary_term,omitempty"`
 	Pipeline        string `json:"pipeline,omitempty"`
 }
 
@@ -137,6 +141,20 @@ func (r *BulkIndexRequest) VersionType(versionType string) *BulkIndexRequest {
 	return r
 }
 
+// IfSeqNo specifies seq no of the last operation.
+func (r *BulkIndexRequest) IfSeqNo(ifSeqNo int64) *BulkIndexRequest {
+	r.ifSeqNo = &ifSeqNo
+	r.source = nil
+	return r
+}
+
+// IfPrimaryTerm specifies primary term of the last operation.
+func (r *BulkIndexRequest) IfPrimaryTerm(ifPrimaryTerm int64) *BulkIndexRequest {
+	r.ifPrimaryTerm = &ifPrimaryTerm
+	r.source = nil
+	return r
+}
+
 // Doc specifies the document to index.
 func (r *BulkIndexRequest) Doc(doc interface{}) *BulkIndexRequest {
 	r.doc = doc
@@ -191,6 +209,8 @@ func (r *BulkIndexRequest) Source() ([]string, error) {
 		Parent:          r.parent,
 		Version:         r.version,
 		VersionType:     r.versionType,
+		IfSeqNo:         r.ifSeqNo,
+		IfPrimaryTerm:   r.ifPrimaryTerm,
 		RetryOnConflict: r.retryOnConflict,
 		Pipeline:        r.pipeline,
 	}

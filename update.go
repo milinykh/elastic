@@ -28,6 +28,8 @@ type UpdateService struct {
 	fsc                 *FetchSourceContext
 	version             *int64
 	versionType         string
+	ifSeqNo             *int64
+	ifPrimaryTerm       *int64
 	retryOnConflict     *int
 	refresh             string
 	waitForActiveShards string
@@ -111,6 +113,18 @@ func (b *UpdateService) Version(version int64) *UpdateService {
 // VersionType is e.g. "internal".
 func (b *UpdateService) VersionType(versionType string) *UpdateService {
 	b.versionType = versionType
+	return b
+}
+
+// IfSeqNo specifies seq no of the last operation.
+func (b *UpdateService) IfSeqNo(ifSeqNo int64) *UpdateService {
+	b.ifSeqNo = &ifSeqNo
+	return b
+}
+
+// IfPrimaryTerm specifies primary term of the last operation.
+func (b *UpdateService) IfPrimaryTerm(ifPrimaryTerm int64) *UpdateService {
+	b.ifPrimaryTerm = &ifPrimaryTerm
 	return b
 }
 
@@ -248,6 +262,12 @@ func (b *UpdateService) url() (string, url.Values, error) {
 	}
 	if b.retryOnConflict != nil {
 		params.Set("retry_on_conflict", fmt.Sprintf("%v", *b.retryOnConflict))
+	}
+	if b.ifSeqNo != nil {
+		params.Set("if_seq_no", fmt.Sprintf("%v", *b.ifSeqNo))
+	}
+	if b.ifPrimaryTerm != nil {
+		params.Set("if_primary_term", fmt.Sprintf("%v", *b.ifPrimaryTerm))
 	}
 
 	return path, params, nil
